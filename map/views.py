@@ -4,10 +4,7 @@ from .models import Search
 from .forms import SearchForm
 import folium
 import geocoder
-
 # Create your views here.
-
-
 def index(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -17,12 +14,15 @@ def index(request):
     else:
         form = SearchForm()
     address = Search.objects.all().last()
+    print(address)
+    ptr=Search.objects.all()
+    print(ptr)
     location = geocoder.osm(address)
     lat = location.lat
     lng = location.lng
     country = location.country
     if lat == None or lng == None:
-        address.delete()
+        #address.delete()
         return HttpResponse('You address input is invalid')
 
     # Create Map Object
